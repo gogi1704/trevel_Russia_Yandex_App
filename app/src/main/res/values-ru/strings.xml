@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">trevel_Russia_Yandex_App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_point">Создать метку</string>
+    <string name="point_title">Название метки</string>
+    <string name="create">Создать</string>
+    <string name="back">Назад</string>
+</resources>
