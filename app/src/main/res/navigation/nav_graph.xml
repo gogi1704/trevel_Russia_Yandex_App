@@ -3,20 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/mapFragment">
 
     <fragment
-        android:id="@+id/listFragment"
+        android:id="@+id/mapFragment"
         android:name="com.example.trevel_russia_yandex_app.ui.MapFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_map" >
+
         <action
-            android:id="@+id/action_listFragment_to_listFragment2"
-            app:destination="@id/listFragment2" />
+            android:id="@+id/action_mapFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
     <fragment
-        android:id="@+id/listFragment2"
+        android:id="@+id/listFragment"
         android:name="com.example.trevel_russia_yandex_app.ui.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+
+
+        <action
+            android:id="@+id/action_listFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
 </navigation>

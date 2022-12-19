@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_point">Create point</string>
     <string name="point_title">Point title</string>
+    <string name="point_content">Point content</string>
     <string name="create">Create</string>
     <string name="back">Back</string>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.trevel_russia_yandex_app.viewModels.MapViewModel
 import com.example.trevel_russia_yandex_app.R
@@ -22,13 +23,18 @@ import com.yandex.mapkit.layers.GeoObjectTapEvent
 import com.yandex.mapkit.layers.GeoObjectTapListener
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.map.Map
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
 class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
     private lateinit var map: Map
     private lateinit var binding: FragmentMapBinding
     private lateinit var iconPlaceMark: Bitmap
+    private lateinit var collection: MapObjectCollection
     private val viewModel: MapViewModel by activityViewModels()
+    private val dialog = MyDialogFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,7 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
         iconPlaceMark =
             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_baseline_location_on_24)
                 ?.toBitmap()!!
+
     }
 
     override fun onCreateView(
@@ -49,17 +56,10 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
             addInputListener(this@MapFragment)
         }
 
+        collection = map.mapObjects.addCollection()
 
-        val point = Point(55.751574, 37.573856)
 
-        map.move(
-            CameraPosition(point, 16.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 2F),
-            null
-        )
 
-        val collection = map.mapObjects.addCollection()
-        viewModel.createPlaceMark(requireContext(), collection, point, "123213", iconPlaceMark)
 
         return binding.root
     }
@@ -70,19 +70,24 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
 
         with(binding) {
             buttonList.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_listFragment2)
+                findNavController().navigate(R.id.action_mapFragment_to_listFragment)
             }
 
             buttonCreate.setOnClickListener {
                 val title = inputTitle.text.toString()
                 val content = inputContent.text.toString()
+                if (title != "") {
+                    viewModel.createPlaceMark(
 
-                findNavController().navigate(
-                    R.id.action_listFragment_to_listFragment2,
-                    Bundle().apply {
-                        putString("title" , title)
-                        putString("content" , content)
-                    })
+                        collection,
+                        viewModel.emptyPoint,
+                        title,
+                        content,
+                        iconPlaceMark
+                    )
+                }
+                viewModel.emptyPoint = Point()
+                createPointGroup.visibility = View.GONE
             }
 
             buttonBack.setOnClickListener {
@@ -90,11 +95,21 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
                 inputTitle.text = null
                 createPointGroup.visibility = View.GONE
             }
+        }
 
+        viewModel.pointLiveData.observe(viewLifecycleOwner) {
+            if (it.id != -1) {
+                dialog.show(parentFragmentManager, "")
+            }
+        }
+
+        viewModel.pointListLiveData.observe(viewLifecycleOwner){
+            viewModel.addAllPlaceMarks(collection)
         }
 
 
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -109,16 +124,14 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
     }
 
     override fun onObjectTap(tap: GeoObjectTapEvent): Boolean {
-        Toast.makeText(requireContext() , "${tap.geoObject.metadataContainer}" , Toast.LENGTH_LONG).show()
-       return true
+        return true
     }
 
     override fun onMapTap(map: Map, point: Point) {
-
     }
 
     override fun onMapLongTap(map: Map, point: Point) {
-
+        viewModel.emptyPoint = point
         binding.createPointGroup.visibility = View.VISIBLE
     }
 

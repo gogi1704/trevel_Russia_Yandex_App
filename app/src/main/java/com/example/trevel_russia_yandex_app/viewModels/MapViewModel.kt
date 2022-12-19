@@ -1,32 +1,128 @@
 package com.example.trevel_russia_yandex_app.viewModels
 
-import android.content.Context
+import android.app.Application
 import android.graphics.Bitmap
-import android.widget.Toast
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.*
+import com.example.trevel_russia_yandex_app.R
+import com.example.trevel_russia_yandex_app.db.PointEntity
+import com.example.trevel_russia_yandex_app.model.PointModel
+import com.example.trevel_russia_yandex_app.repository.MapRepositoryImpl
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.MapObjectCollection
-import com.yandex.mapkit.map.PlacemarkMapObject
+import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.runtime.image.ImageProvider
+import kotlinx.coroutines.*
 
-class MapViewModel() : ViewModel() {
+class MapViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val icon =
+        AppCompatResources.getDrawable(
+            application.applicationContext,
+            R.drawable.ic_baseline_location_on_24
+        )
+            ?.toBitmap()!!
+    private val repository = MapRepositoryImpl(application.applicationContext)
+    var emptyPoint = Point()
+    var emptyPointModel = PointModel(
+        -1, "", "", 0.0, 0.0
+    )
+        set(value) {
+            field = value
+            pointLiveData.value = field
+        }
+    val pointLiveData = MutableLiveData(emptyPointModel)
+
+    private var data = listOf<PointEntity>()
+        set(value) {
+            field = value
+            pointListLiveData.value = value
+        }
+    val pointListLiveData = MutableLiveData(data)
+
+
+    private val tap = MapObjectTapListener { mapObject, point ->
+        getPointById(mapObject.userData.toString().toInt())
+
+        true
+    }
+
+    init {
+        viewModelScope.launch {
+            data = repository.getAll()
+        }
+
+    }
 
     fun createPlaceMark(
-        context: Context,
         collection: MapObjectCollection,
         point: Point,
+        placeMarkTitle: String,
         placeMarkContent: String,
         iconBitmap: Bitmap
-    ): PlacemarkMapObject =
+    ) {
+        viewModelScope.launch {
+
+            repository.addPoint(
+                PointEntity(
+                    id = 0,
+                    title = placeMarkTitle,
+                    content = placeMarkContent,
+                    latitude = point.latitude,
+                    longitude = point.longitude
+                )
+            )
+
+        }
+
         collection.addPlacemark(point).apply {
-            setIcon(ImageProvider.fromBitmap(iconBitmap))
-            opacity = 1F
-            userData = placeMarkContent
-            addTapListener { mapObject, point ->
-                val text = mapObject.userData
-                Toast.makeText(context, text.toString(), Toast.LENGTH_LONG).show()
-                true
+            viewModelScope.launch {
+                val isEmpty = repository.getAll().size == 1
+                setIcon(ImageProvider.fromBitmap(iconBitmap))
+                opacity = 1F
+                userData = if (isEmpty) {
+                    0
+                } else repository.getLast().id
+                addTapListener(tap)
+            }
+
+        }
+
+        updateData()
+        emptyPointModel = PointModel(
+            -1, "", "", 0.0, 0.0
+        )
+    }
+
+    fun addAllPlaceMarks(collection: MapObjectCollection) {
+
+        viewModelScope.launch {
+
+            for (point in data) {
+
+                collection.addPlacemark(point.toPoint()).apply {
+                    setIcon(ImageProvider.fromBitmap(icon))
+                    opacity = 1F
+                    userData = point.id
+                    addTapListener(tap)
+                }
             }
         }
+
+    }
+
+
+    private fun getPointById(id: Int) {
+        viewModelScope.launch {
+            emptyPointModel = data.last { it.id == id }.toPointModel()
+        }
+    }
+
+    private fun updateData() {
+        viewModelScope.launch {
+            data = repository.getAll()
+        }
+    }
+
 }
