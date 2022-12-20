@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.trevel_russia_yandex_app.viewModels.MapViewModel
 import com.example.trevel_russia_yandex_app.R
-import com.example.trevel_russia_yandex_app.constans.MAP_API_KEY
 import com.example.trevel_russia_yandex_app.databinding.FragmentMapBinding
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -23,8 +20,6 @@ import com.yandex.mapkit.layers.GeoObjectTapEvent
 import com.yandex.mapkit.layers.GeoObjectTapListener
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.map.Map
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 
 class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
@@ -38,7 +33,6 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey(MAP_API_KEY)
         MapKitFactory.initialize(requireContext())
         iconPlaceMark =
             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_baseline_location_on_24)
@@ -58,15 +52,21 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
 
         collection = map.mapObjects.addCollection()
 
-
-
-
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (arguments != null) {
+            val point = viewModel.getPointById(requireArguments().getInt("id"))
+            map.move(
+                CameraPosition(point, 14.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 5F),
+                null
+            );
+        }
 
         with(binding) {
             buttonList.setOnClickListener {
@@ -103,7 +103,7 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
             }
         }
 
-        viewModel.pointListLiveData.observe(viewLifecycleOwner){
+        viewModel.pointListLiveData.observe(viewLifecycleOwner) {
             viewModel.addAllPlaceMarks(collection)
         }
 
@@ -135,5 +135,8 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener {
         binding.createPointGroup.visibility = View.VISIBLE
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        arguments?.clear()
+    }
 }
