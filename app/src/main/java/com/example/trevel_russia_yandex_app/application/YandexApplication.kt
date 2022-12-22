@@ -16,7 +16,7 @@ class YandexApplication() : Application() {
 
     init {
 
-            MapKitFactory.setApiKey(MAP_API_KEY)
+        MapKitFactory.setApiKey(MAP_API_KEY)
 
     }
 

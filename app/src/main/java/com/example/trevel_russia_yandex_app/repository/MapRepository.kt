@@ -10,7 +10,7 @@ interface MapRepository {
     suspend fun getAll(): List<PointEntity>
     suspend fun addPoint(pointModel: PointEntity)
     suspend fun deletePoint(id: Int)
-    suspend fun getPointById(id: Int):PointEntity
-
-    suspend fun getLast():PointEntity
+    suspend fun getPointById(id: Int): PointEntity
+    suspend fun editPoint(id: Int, title: String, content: String)
+    suspend fun getLast(): PointEntity
 }

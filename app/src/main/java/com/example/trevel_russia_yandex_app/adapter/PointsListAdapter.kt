@@ -10,6 +10,8 @@ import com.example.trevel_russia_yandex_app.model.PointModel
 
 interface OnItemClickListener {
     fun onClick(id: Int)
+    fun delete(id:Int)
+    fun edit(id:Int)
 }
 
 class PointsListAdapter(private val listener: OnItemClickListener) :
@@ -38,6 +40,12 @@ class PointsListAdapter(private val listener: OnItemClickListener) :
                 textContent.text = pointModel.content
                 itemView.setOnClickListener {
                     listener.onClick(pointModel.id)
+                }
+                imageDelete.setOnClickListener {
+                    listener.delete(pointModel.id)
+                }
+                imageEdit.setOnClickListener {
+                    listener.edit(pointModel.id)
                 }
             }
         }

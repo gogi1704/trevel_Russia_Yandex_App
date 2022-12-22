@@ -16,6 +16,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonList"
+        android:src="@drawable/ic_baseline_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -81,7 +82,18 @@
             android:text="@string/back"
             app:layout_constraintEnd_toEndOf="@id/input_content"
             app:layout_constraintTop_toBottomOf="@id/input_content" />
+        
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_goToMe"
+        android:layout_gravity="bottom"
+        android:src="@drawable/ic_baseline_my_location_24"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

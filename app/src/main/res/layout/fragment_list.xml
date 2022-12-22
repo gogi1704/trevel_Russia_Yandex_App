@@ -6,10 +6,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ListFragment">
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_View"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         tools:listitem="@layout/item_layout"
         android:layout_height="match_parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/createPoint_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
+        android:background="@color/design_default_color_on_primary"
+        android:padding="12dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_point"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/input_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/point_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextTitle" />
+
+        <EditText
+            android:id="@+id/input_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/point_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_title" />
+
+        <Button
+            android:id="@+id/button_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/create"
+            app:layout_constraintStart_toStartOf="@id/input_content"
+            app:layout_constraintTop_toBottomOf="@id/input_content" />
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/back"
+            app:layout_constraintEnd_toEndOf="@id/input_content"
+            app:layout_constraintTop_toBottomOf="@id/input_content" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -81,7 +81,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
                 setIcon(ImageProvider.fromBitmap(iconBitmap))
                 opacity = 1F
                 userData = if (data.isEmpty()) {
-                    0
+                    1
                 } else data.last().id + 1
                 addTapListener(tap)
             }
@@ -111,14 +111,28 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun getPointById(id: Int):Point {
-        val point = data.last { it.id == id }.toPointModel()
-        return Point(point.latitude , point.longitude)
+    fun editPoint(id: Int, title: String, content: String) {
+        viewModelScope.launch {
+            repository.editPoint(id, title, content)
+        }
+        updateData()
     }
 
-    private fun getPointModelById(id: Int){
-            val pointModel = data.last { it.id == id }.toPointModel()
-            emptyPointModel = pointModel
+    fun getPointById(id: Int): Point {
+        val point = data.last { it.id == id }.toPointModel()
+        return Point(point.latitude, point.longitude)
+    }
+
+    private fun getPointModelById(id: Int) {
+        val pointModel = data.last { it.id == id }.toPointModel()
+        emptyPointModel = pointModel
+    }
+
+    fun deletePoint(id: Int) {
+        viewModelScope.launch {
+            repository.deletePoint(id)
+            updateData()
+        }
     }
 
     private fun updateData() {

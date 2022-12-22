@@ -27,4 +27,8 @@ interface MapDao {
     @Query("SELECT * FROM PointEntity WHERE id = :id")
     suspend fun getById(id: Int):PointEntity
 
+    @Query("UPDATE PointEntity SET title = :title , content = :content WHERE id =:id  ")
+    suspend fun editPoint(id: Int , title:String , content:String)
+
+
 }

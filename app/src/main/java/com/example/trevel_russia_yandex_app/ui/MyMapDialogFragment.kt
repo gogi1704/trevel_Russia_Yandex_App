@@ -11,7 +11,7 @@ import com.example.trevel_russia_yandex_app.R
 import com.example.trevel_russia_yandex_app.model.PointModel
 import com.example.trevel_russia_yandex_app.viewModels.MapViewModel
 
-class MyDialogFragment() : DialogFragment() {
+class MyMapDialogFragment() : DialogFragment() {
     private val viewModel: MapViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

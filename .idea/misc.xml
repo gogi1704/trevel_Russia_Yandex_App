@@ -4,11 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.117" />
+        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/divider.xml" value="0.1815" />
+        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1185" />
+        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1185" />
+        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/ic_baseline_list.xml" value="0.1185" />
         <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1045" />
+        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/ic_baseline_my_location_24.xml" value="0.1185" />
         <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.117" />
         <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/layout/fragment_list.xml" value="0.21603260869565216" />
-        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/layout/fragment_map.xml" value="0.264" />
+        <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/layout/fragment_map.xml" value="0.4" />
         <entry key="..\:/Users/zoral/AndroidStudioProjects/trevel_Russia_Yandex_App/app/src/main/res/layout/item_layout.xml" value="0.264" />
       </map>
     </option>
