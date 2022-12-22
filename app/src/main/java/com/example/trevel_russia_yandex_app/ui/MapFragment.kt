@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -51,7 +52,11 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener, UserLocatio
             if (isGranted) {
                 onMapReady()
             } else {
-                "sorry"
+                Toast.makeText(
+                    requireContext(),
+                    "Sorry, but i need a grant!!!!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
@@ -115,6 +120,8 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener, UserLocatio
                     )
                 }
                 viewModel.emptyPoint = Point()
+                inputContent.text = null
+                inputTitle.text = null
                 createPointGroup.visibility = View.GONE
                 KeyboardUtils.hideKeyboard(binding.mapView)
             }
@@ -179,10 +186,10 @@ class MapFragment : Fragment(), GeoObjectTapListener, InputListener, UserLocatio
             routeStartLocation = userLocationLayer.cameraPosition()!!.target
             map.move(
                 CameraPosition(routeStartLocation, 16f, 0f, 0f),
-                Animation(Animation.Type.SMOOTH, 2F),
-                Map.CameraCallback { })
+                Animation(Animation.Type.SMOOTH, 2F)
+            ) { }
         } else {
-            //TODO
+            Toast.makeText(requireContext(), "Wait , and repeat!", Toast.LENGTH_SHORT).show()
         }
 
     }

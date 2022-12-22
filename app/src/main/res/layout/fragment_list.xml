@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ListFragment">
-
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_View"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_layout"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_layout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/createPoint_group"
@@ -43,7 +42,9 @@
             android:layout_marginTop="8dp"
             android:hint="@string/point_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/TextTitle"
+            android:autofillHints=""
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/input_content"
@@ -52,7 +53,9 @@
             android:layout_marginTop="8dp"
             android:hint="@string/point_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/input_title" />
+            app:layout_constraintTop_toBottomOf="@+id/input_title"
+            android:autofillHints=""
+            android:inputType="text" />
 
         <Button
             android:id="@+id/button_create"
@@ -73,7 +76,6 @@
             android:text="@string/back"
             app:layout_constraintEnd_toEndOf="@id/input_content"
             app:layout_constraintTop_toBottomOf="@id/input_content" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

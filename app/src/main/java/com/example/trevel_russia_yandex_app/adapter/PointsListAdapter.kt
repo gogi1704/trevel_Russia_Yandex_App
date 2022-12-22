@@ -10,8 +10,8 @@ import com.example.trevel_russia_yandex_app.model.PointModel
 
 interface OnItemClickListener {
     fun onClick(id: Int)
-    fun delete(id:Int)
-    fun edit(id:Int)
+    fun delete(id: Int)
+    fun edit(id: Int)
 }
 
 class PointsListAdapter(private val listener: OnItemClickListener) :

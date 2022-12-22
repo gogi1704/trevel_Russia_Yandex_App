@@ -7,4 +7,6 @@
     <string name="point_content">Point content</string>
     <string name="create">Create</string>
     <string name="back">Back</string>
+    <string name="button_mylocation">Button_myLocation</string>
+    <string name="button_list">Button_list</string>
 </resources>

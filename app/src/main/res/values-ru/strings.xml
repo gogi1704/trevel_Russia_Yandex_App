@@ -7,4 +7,6 @@
     <string name="point_content">Описание</string>
     <string name="create">Создать</string>
     <string name="back">Назад</string>
+    <string name="button_mylocation">Button_myLocation</string>
+    <string name="button_list">Button_list</string>
 </resources>

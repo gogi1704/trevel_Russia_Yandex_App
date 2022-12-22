@@ -25,7 +25,8 @@ class MapRepositoryImpl(context: Context) : MapRepository {
 
     override suspend fun getPointById(id: Int) = dao.getById(id)
 
-    override suspend fun editPoint(id: Int, title: String, content: String) = dao.editPoint(id , title , content)
+    override suspend fun editPoint(id: Int, title: String, content: String) =
+        dao.editPoint(id, title, content)
 
     override suspend fun getLast(): PointEntity = dao.getLast()
 

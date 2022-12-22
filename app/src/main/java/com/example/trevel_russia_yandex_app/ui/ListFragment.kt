@@ -55,6 +55,26 @@ class ListFragment : Fragment() {
                     createPointGroup.visibility = View.VISIBLE
                     inputTitle.setText(pointModel?.title)
                     inputContent.setText(pointModel?.content)
+
+
+                    buttonCreate.setOnClickListener {
+
+                        viewModel.editPoint(
+                            pointModel?.id!!,
+                            inputTitle.text.toString(),
+                            inputContent.text.toString()
+                        )
+                        createPointGroup.visibility = View.GONE
+                        KeyboardUtils.hideKeyboard(it)
+
+                        viewModel.updateData()
+                    }
+
+                    buttonBack.setOnClickListener {
+                        createPointGroup.visibility = View.GONE
+                        KeyboardUtils.hideKeyboard(it)
+                    }
+
                 }
             }
 
@@ -81,24 +101,7 @@ class ListFragment : Fragment() {
             adapter.submitList(viewModel.pointListLiveData.value?.map { it.toPointModel() })
         }
 
-        with(binding) {
-            buttonCreate.setOnClickListener {
-                val pointModel = viewModel.pointListLiveData.value?.filter { it.id == id }?.last()
-                viewModel.editPoint(pointModel?.id!!, pointModel.title , pointModel.content ?: "")
-                KeyboardUtils.hideKeyboard(it)
-
-            }
-
-            buttonBack.setOnClickListener {
-                createPointGroup.visibility = View.GONE
-                KeyboardUtils.hideKeyboard(it)
-            }
-        }
-
-
-
 
     }
-
 
 }

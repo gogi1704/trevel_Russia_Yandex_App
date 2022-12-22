@@ -126,6 +126,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     private fun getPointModelById(id: Int) {
         val pointModel = data.last { it.id == id }.toPointModel()
         emptyPointModel = pointModel
+
     }
 
     fun deletePoint(id: Int) {
@@ -135,7 +136,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun updateData() {
+    fun updateData() {
         viewModelScope.launch {
             data = repository.getAll()
         }
